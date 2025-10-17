@@ -1,4 +1,4 @@
-# JobRight Clone - Project Summary
+# CareerPilot - Project Summary
 
 ## What We Built
 
@@ -44,7 +44,7 @@ A fully functional, **open-source job matching platform** inspired by JobRight.a
 ## Project Structure
 
 ```
-jobright-clone/
+careerpilot/
 ├── backend/
 │   ├── app/
 │   │   ├── api/              # FastAPI endpoints
@@ -202,7 +202,7 @@ Overall Score = 30% × keyword_overlap
 ```bash
 # 1. Clone
 git clone <repo-url>
-cd jobright-clone
+cd careerpilot
 
 # 2. Setup
 cp backend/.env.example backend/.env

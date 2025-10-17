@@ -1,6 +1,6 @@
 # Quick Start Guide
 
-Get up and running with JobRight Clone in 5 minutes!
+Get up and running with CareerPilot in 5 minutes!
 
 ## Prerequisites
 
@@ -14,8 +14,8 @@ Get up and running with JobRight Clone in 5 minutes!
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/jobright-clone.git
-cd jobright-clone
+git clone https://github.com/yourusername/careerpilot.git
+cd careerpilot
 
 # Copy environment file
 cp backend/.env.example backend/.env

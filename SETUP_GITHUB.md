@@ -6,7 +6,7 @@
 
 Go to https://github.com/new and create a new repository:
 
-- **Repository name**: `jobright-clone`
+- **Repository name**: `careerpilot`
 - **Description**: `Open-source JobRight.ai alternative with AI-powered resume matching, tailoring, and job scraping`
 - **Visibility**: ✅ Public (so others can use it)
 - **Do NOT** check "Initialize with README" (we already have one)
@@ -18,17 +18,17 @@ Click **Create repository**
 Run these commands in your terminal:
 
 ```bash
-cd /Users/ryleymao/jobright-clone
+cd /Users/ryleymao/careerpilot
 
 # Add GitHub as remote
-git remote add origin https://github.com/ryleymao/jobright-clone.git
+git remote add origin https://github.com/ryleymao/careerpilot.git
 
 # Push code
 git push -u origin main
 ```
 
 That's it! Your code will be live at:
-**https://github.com/ryleymao/jobright-clone**
+**https://github.com/ryleymao/careerpilot**
 
 ### 3. Add Your API Key (Don't commit it!)
 
@@ -76,13 +76,13 @@ In Settings:
 You can add these badges to make your README look professional. Add them at the top of README.md:
 
 ```markdown
-# JobRight Clone - Open Source Job Matching Platform
+# CareerPilot - Open Source Job Matching Platform
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Python](https://img.shields.io/badge/python-3.11-blue.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.109.0-green.svg)
 ![Docker](https://img.shields.io/badge/docker-ready-blue.svg)
-[![GitHub stars](https://img.shields.io/github/stars/ryleymao/jobright-clone.svg)](https://github.com/ryleymao/jobright-clone/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/ryleymao/careerpilot.svg)](https://github.com/ryleymao/careerpilot/stargazers)
 ```
 
 ### Share on Social Media
@@ -98,7 +98,7 @@ Tweet/post about it:
 
 Built with Python, FastAPI, PostgreSQL & ML
 
-Free to use → https://github.com/ryleymao/jobright-clone
+Free to use → https://github.com/ryleymao/careerpilot
 
 #OpenSource #JobSearch #AI #Python
 ```
@@ -121,7 +121,7 @@ We welcome contributions! Here's how you can help:
 
 ## Getting Started
 1. Fork the repo
-2. Clone: `git clone https://github.com/YOUR_USERNAME/jobright-clone.git`
+2. Clone: `git clone https://github.com/YOUR_USERNAME/careerpilot.git`
 3. Create branch: `git checkout -b feature/your-feature`
 4. Make changes
 5. Test: `docker-compose up -d && pytest`
@@ -161,7 +161,7 @@ ssh-keygen -t ed25519 -C "your_email@example.com"
 # Add to GitHub: https://github.com/settings/keys
 
 # Change remote URL
-git remote set-url origin git@github.com:ryleymao/jobright-clone.git
+git remote set-url origin git@github.com:ryleymao/careerpilot.git
 ```
 
 ## Next Steps After GitHub
@@ -186,4 +186,4 @@ That's it! Your project is now open source and ready for the world to use! 🎉
 
 ---
 
-Need help? Open an issue at: https://github.com/ryleymao/jobright-clone/issues
+Need help? Open an issue at: https://github.com/ryleymao/careerpilot/issues

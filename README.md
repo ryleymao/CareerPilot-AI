@@ -1,6 +1,6 @@
-# JobRight Clone - Open Source Job Matching Platform
+# CareerPilot - Your AI-Powered Job Search Copilot
 
-An open-source alternative to JobRight.ai that helps you find and apply to jobs using AI-powered resume matching, tailoring, and automation.
+An open-source job search platform that helps you find and apply to jobs using AI-powered resume matching, tailoring, and automation. Like having a personal career assistant!
 
 ## Features
 
@@ -43,8 +43,8 @@ An open-source alternative to JobRight.ai that helps you find and apply to jobs 
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/jobright-clone.git
-cd jobright-clone
+git clone https://github.com/yourusername/careerpilot.git
+cd careerpilot
 ```
 
 2. **Set up environment variables**
@@ -255,7 +255,7 @@ SENTENCE_TRANSFORMER_MODEL=all-MiniLM-L6-v2
 
 ### Project Structure
 ```
-jobright-clone/
+careerpilot/
 ├── backend/
 │   ├── app/
 │   │   ├── api/          # FastAPI endpoints

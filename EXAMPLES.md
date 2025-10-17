@@ -1,6 +1,6 @@
 # Usage Examples
 
-Real-world examples of using JobRight Clone.
+Real-world examples of using CareerPilot.
 
 ## Example 1: Full Workflow - Python Developer
 

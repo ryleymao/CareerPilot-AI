@@ -1,1 +1,1 @@
-# JobRight Clone - Open Source Job Matching Platform
+# CareerPilot - Open Source Job Matching Platform

@@ -45,7 +45,7 @@ ollama run llama3.1
 
 Type a question and press Enter. Type `/bye` to exit.
 
-## Using in JobRight Clone
+## Using in CareerPilot
 
 The project is **already configured** to use Ollama by default!
 
