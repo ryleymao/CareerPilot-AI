@@ -29,14 +29,14 @@ echo "This will take 2-3 minutes the first time..."
 echo ""
 
 # Start everything
-docker-compose up -d --build
+docker compose up -d --build
 
 echo ""
 echo "⏳ Waiting for services to start..."
 sleep 10
 
 # Check status
-docker-compose ps
+docker compose ps
 
 echo ""
 echo "✅ CareerPilot is ready!"

@@ -10,7 +10,7 @@ echo ""
 cd "$(dirname "$0")"
 
 # Stop all services
-docker-compose down
+docker compose down
 
 echo ""
 echo "✅ All services stopped!"
