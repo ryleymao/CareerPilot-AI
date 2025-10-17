@@ -28,11 +28,14 @@ class Settings(BaseSettings):
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
-    # AI APIs
+    # AI APIs / LLM Configuration
+    LLM_PROVIDER: str = "ollama"  # "ollama" (FREE!), "anthropic", or "openai"
+    OLLAMA_URL: str = "http://localhost:11434"
+    OLLAMA_MODEL: str = "llama3.1"  # Easy to change! Try: llama3.1, mistral, codellama, phi3
+
+    # Optional: Cloud API keys (if you want to use them instead)
     ANTHROPIC_API_KEY: str = ""
     OPENAI_API_KEY: str = ""
-    USE_LOCAL_LLM: bool = False
-    OLLAMA_URL: str = "http://localhost:11434"
 
     # CORS
     CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:80"]

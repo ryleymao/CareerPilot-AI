@@ -1,8 +1,18 @@
 """Resume tailoring service using LLMs."""
 from typing import Dict, List, Any, Optional
-from anthropic import Anthropic
-from openai import OpenAI
+import requests
 from app.config import settings
+
+# Optional imports for cloud APIs
+try:
+    from anthropic import Anthropic
+except ImportError:
+    Anthropic = None
+
+try:
+    from openai import OpenAI
+except ImportError:
+    OpenAI = None
 
 
 class ResumeTailorService:
@@ -12,51 +22,95 @@ class ResumeTailorService:
         """Initialize tailoring service."""
         self.anthropic_client = None
         self.openai_client = None
+        self.llm_provider = settings.LLM_PROVIDER  # "ollama", "anthropic", or "openai"
+        self.ollama_model = settings.OLLAMA_MODEL  # Easy to change model!
 
-        if settings.ANTHROPIC_API_KEY:
+        # Initialize cloud API clients if available
+        if Anthropic and settings.ANTHROPIC_API_KEY:
             self.anthropic_client = Anthropic(api_key=settings.ANTHROPIC_API_KEY)
 
-        if settings.OPENAI_API_KEY:
+        if OpenAI and settings.OPENAI_API_KEY:
             self.openai_client = OpenAI(api_key=settings.OPENAI_API_KEY)
+
+    def _call_ollama(self, prompt: str) -> str:
+        """Call Ollama (local LLM) - FREE and UNLIMITED!"""
+        try:
+            response = requests.post(
+                f"{settings.OLLAMA_URL}/api/generate",
+                json={
+                    "model": self.ollama_model,
+                    "prompt": prompt,
+                    "stream": False,
+                    "options": {
+                        "temperature": 0.7,
+                        "num_predict": 2000,
+                    }
+                },
+                timeout=60
+            )
+            response.raise_for_status()
+            return response.json()["response"]
+        except Exception as e:
+            print(f"Ollama error: {e}")
+            raise ValueError(f"Ollama not available. Make sure it's running: brew services start ollama")
 
     def _call_anthropic(self, prompt: str) -> str:
         """Call Anthropic Claude API."""
         if not self.anthropic_client:
-            raise ValueError("Anthropic API key not configured")
+            raise ValueError("Anthropic not available. Install: pip install anthropic")
 
         message = self.anthropic_client.messages.create(
             model="claude-3-5-sonnet-20241022",
             max_tokens=2000,
-            messages=[
-                {"role": "user", "content": prompt}
-            ]
+            messages=[{"role": "user", "content": prompt}]
         )
-
         return message.content[0].text
 
     def _call_openai(self, prompt: str) -> str:
         """Call OpenAI GPT API."""
         if not self.openai_client:
-            raise ValueError("OpenAI API key not configured")
+            raise ValueError("OpenAI not available. Install: pip install openai")
 
         response = self.openai_client.chat.completions.create(
             model="gpt-4-turbo-preview",
             max_tokens=2000,
-            messages=[
-                {"role": "user", "content": prompt}
-            ]
+            messages=[{"role": "user", "content": prompt}]
         )
-
         return response.choices[0].message.content
 
     def _call_llm(self, prompt: str) -> str:
-        """Call available LLM (prefer Anthropic)."""
-        if self.anthropic_client:
+        """
+        Call LLM based on configured provider.
+
+        Priority:
+        1. Use configured LLM_PROVIDER
+        2. Fallback to Ollama (free & unlimited)
+        3. Try Anthropic if available
+        4. Try OpenAI if available
+        """
+        # Use explicitly configured provider
+        if self.llm_provider == "ollama":
+            return self._call_ollama(prompt)
+        elif self.llm_provider == "anthropic" and self.anthropic_client:
             return self._call_anthropic(prompt)
-        elif self.openai_client:
+        elif self.llm_provider == "openai" and self.openai_client:
             return self._call_openai(prompt)
-        else:
-            raise ValueError("No LLM API configured. Set ANTHROPIC_API_KEY or OPENAI_API_KEY")
+
+        # Fallback logic
+        try:
+            return self._call_ollama(prompt)
+        except Exception:
+            if self.anthropic_client:
+                return self._call_anthropic(prompt)
+            elif self.openai_client:
+                return self._call_openai(prompt)
+            else:
+                raise ValueError(
+                    "No LLM available. Either:\n"
+                    "1. Start Ollama: brew services start ollama\n"
+                    "2. Set ANTHROPIC_API_KEY in .env\n"
+                    "3. Set OPENAI_API_KEY in .env"
+                )
 
     def generate_tailoring_suggestions(
         self,
