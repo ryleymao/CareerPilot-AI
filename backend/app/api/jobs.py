@@ -8,6 +8,7 @@ from app.database import get_db
 from app.models.job import Job
 from app.scrapers.job_scraper import job_scraper
 from app.ml.embeddings import embedding_service
+from app.services.ai_job_discovery import AIJobDiscovery
 
 router = APIRouter()
 
@@ -19,13 +20,63 @@ class JobSearchRequest(BaseModel):
     results_wanted: int = 20
 
 
+@router.post("/discover")
+async def discover_jobs_ai(
+    request: JobSearchRequest,
+    db: Session = Depends(get_db)
+):
+    """
+    🤖 AI-POWERED Job Discovery (Recommended!)
+
+    Unlike basic scrapers, this uses AI to find ONLY:
+    - Fresh jobs (posted in last 14 days, not 90!)
+    - Legitimate postings (no spam/scams)
+    - High-quality jobs (quality score > 70%)
+    - Deduplicated results
+
+    Example:
+    {
+        "search_term": "Software Engineer",
+        "location": "Remote",
+        "results_wanted": 50
+    }
+    """
+    try:
+        discovery = AIJobDiscovery(db)
+
+        jobs = discovery.discover_jobs(
+            search_term=request.search_term,
+            location=request.location,
+            max_results=request.results_wanted,
+            max_age_days=14  # Only last 2 weeks
+        )
+
+        # Save to database
+        added_count = 0
+        for job_data in jobs:
+            discovery._save_job_to_db(job_data)
+            added_count += 1
+
+        return {
+            "message": "AI job discovery completed",
+            "jobs_found": len(jobs),
+            "added_to_database": added_count,
+            "quality_filter": "Only fresh, legitimate, high-quality jobs"
+        }
+
+    except Exception as e:
+        raise HTTPException(500, f"AI discovery error: {str(e)}")
+
+
 @router.post("/scrape")
 async def scrape_jobs(
     request: JobSearchRequest,
     db: Session = Depends(get_db)
 ):
     """
-    Scrape jobs from job boards and store in database.
+    Basic job scraping (fallback method).
+
+    ⚠️ May include old/spam jobs. Use /discover for AI-powered search instead!
 
     Example:
     {
