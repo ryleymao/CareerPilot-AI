@@ -19,8 +19,10 @@ COPY requirements.txt .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Download spaCy model
-RUN python -m spacy download en_core_web_sm
+# Download spaCy model (with retry logic)
+RUN python -m spacy download en_core_web_sm || \
+    pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl || \
+    echo "Warning: spaCy model download failed, will download on first run"
 
 # Copy application code
 COPY . .
